@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block body %}
+  
+
+  <main id="main" data-aos="fade" data-aos-delay="1500">
+
+    <!-- ======= End Page Header ======= -->
+    <div class="page-header d-flex align-items-center">
+      <div class="container position-relative">
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-6 text-center">
+            <h2>Fotograf Bilgileri</h2>
+            <p>Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat ipsum dolorem.</p>
+
+            <a class="cta-btn" href="contact.html">Available for hire</a>
+
+          </div>
+        </div>
+      </div>
+    </div><!-- End Page Header -->
+
+    <!-- ======= Gallery Single Section ======= -->
+    <section id="gallery-single" class="gallery-single">
+      <div class="container">
+
+        <div class="position-relative h-100">
+          <div class="slides-1 portfolio-details-slider swiper">
+            <div class="swiper-wrapper align-items-center">
+
+
+              <div class="swiper-slide">
+                <img style="height: 500px; object-fit:cover" src="{{ photo.image.url }}" alt="">
+              </div>
+
+
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+
+        </div>
+
+        <div class="row justify-content-between gy-4 mt-4">
+
+          <div class="col-lg-8">
+            <div class="portfolio-description">
+              <h2>Fotografın tüm detayları</h2>
+              <p>
+                {{ photo.tetx }}
+              </p>
+            
+             <div>
+              <section style="background-color: #ad655f;">
+                <div class="container my-5 py-5">
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-md-12 col-lg-10">
+                      <div class="card text-dark">
+                       <h3>{{ photo.title }} fotografı hakkında sen de yorum yap</h3>
+              
+                        <hr class="my-0" />
+                         
+                         {% for i in comments %}
+                          <div class="card-body p-4">
+                          <div class="d-flex flex-start">
+                            <img class="rounded-circle shadow-1-strong me-3"
+                              src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(24).webp" alt="avatar" width="60"
+                              height="60" />
+                            <div>
+                              <h6 class="fw-bold mb-1">{{ i.user.get_full_name }}</h6>
+                              <div class="d-flex align-items-center mb-3">
+                                <p class="mb-0">
+                                  {{ i.date_now }}
+                                  <span class="badge bg-primary">Pending</span>
+                                </p>
+                                
+                                <a href="#!" class="link-muted"><i class="fas fa-pencil-alt ms-2"></i></a>
+                                <a href="#!" class="link-muted"><i class="fas fa-redo-alt ms-2"></i></a>
+                                <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a>
+                              </div>
+                              <p>
+                                  {{ i.title }}
+                                </p>
+                              <p class="mb-0">
+                                {{ i.text }}
+                                </p>
+                            </div>
+                          </div>
+                        </div>
+                         {% endfor %}
+                          
+                        
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <h3>Resimlerimiz Hakkında yorum yap</h3>
+                {% if request.user.is_authenticated %}
+                <form method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <input type="text" name="title" class="form-control mb-2" placeholder="Yorum Başlığı">
+                  <input type="text" name="text" class="form-control mb-2" placeholder="Yorum">
+                  <button type="submit" class="btn btn-primary" style="width: 100%;">Gönder</button>
+                </form>
+                {% else %}
+                <a style="text-decoration: none;" href="{% url 'loginUser' %}" class="text-white">Yorum yapmak için lütfen kaydolun!</a>
+                {% endif %}
+              </section>
+            </div>
+            
+            </div>
+          </div>
+
+          <div class="col-lg-3">
+            <div class="portfolio-info">
+              <h3>Fotograf Bilgisi</h3>
+              <ul>
+                <li><strong>Türü</strong> <span>{{ photo.category.title }}</span></li>
+
+                <li><strong>Yüklendiği Tarih</strong> <span>{{ photo.date_time }}</span></li>
+                <li><strong>Fotografı Yükleyen</strong> <span>{{ photo.user.get_full_name }}</span></li>
+                <li><a href="#" class="btn-visit align-self-start">Visit Website</a></li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Gallery Single Section -->
+
+  </main><!-- End #main -->
+
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <div id="preloader">
+    <div class="line"></div>
+  </div>
+
+{% endblock body %}
